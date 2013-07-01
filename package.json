@@ -7,7 +7,7 @@
     "example": "example"
   },
   "dependencies": {
-    "ao-mesher": "~0.1.0",
+    "ao-mesher": "~0.1.1",
     "gl-shader": "~0.0.5",
     "brfs": "~0.0.5"
   },
