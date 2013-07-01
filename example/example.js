@@ -1,7 +1,7 @@
 "use strict"
 
 var shell = require("gl-now")()
-var createTexture = require("gl-texture")
+var createTexture = require("gl-texture2d")
 var createBuffer = require("gl-buffer")
 var createVAO = require("gl-vao")
 var glm = require("gl-matrix")
@@ -30,30 +30,32 @@ shell.on("gl-init", function() {
   //Create some voxels
   var voxels = ndarray(new Uint16Array(32*32*32), [32,32,32])
   fill(voxels, function(i,j,k) {
-    var x = i - 16
-    var y = j - 16
-    var z = k - 16
-    return (x*x+y*y+z*z) < 10 ? 1<<15 : 0
+    var x = Math.abs(i - 16)
+    var y = Math.abs(j - 16)
+    var z = Math.abs(k - 16)
+    return (x*x+y*y+z*z) < 30 ? 1<<15 : 0
+    //return Math.max(x,y,z) < 8 ? 1<<15 : 0
   })
   
   //Compute mesh
   var vert_data = createAOMesh(voxels)
   
   //Convert mesh to WebGL buffer
-  var vert_buf = gl.createBuffer(gl, vert_data.buffer.subarray(0, vert_data.length))
+  vertexCount = Math.floor(vert_data.length/8)
+  var vert_buf = createBuffer(gl, vert_data.buffer.subarray(0, vert_data.length))
   vao = createVAO(gl, undefined, [
     { "buffer": vert_buf,
-      "type": gl.FLOAT,
+      "type": gl.UNSIGNED_BYTE,
       "size": 4,
       "offset": 0,
-      "stride": 4,
+      "stride": 8,
       "normalized": false
     },
     { "buffer": vert_buf,
-      "type": gl.FLOAT,
+      "type": gl.UNSIGNED_BYTE,
       "size": 4,
       "offset": 4,
-      "stride": 4,
+      "stride": 8,
       "normalized": false
     }
   ])
@@ -67,18 +69,24 @@ shell.on("gl-init", function() {
 shell.on("gl-render", function(t) {
   var gl = shell.gl
 
+  gl.enable(gl.CULL_FACE)
+  gl.enable(gl.DEPTH_TEST)
+
   //Bind the shader
   shader.bind()
   
   //Set shader attributes
-  shader.attributes.attribs0.location = 0
-  shader.attributes.attribs1.location = 1
+  shader.attributes.attrib0.location = 0
+  shader.attributes.attrib1.location = 1
   
   //Set up camera parameters
   var A = new Float32Array(16)
   shader.uniforms.projection = mat4.perspective(A, Math.PI/4.0, shell.width/shell.height, 1.0, 1000.0)
-  mat4.identity(A)
-  shader.uniforms.view = A
+  
+  var t = 0.0001*Date.now()
+  
+  
+  shader.uniforms.view = mat4.lookAt(A, [30*Math.cos(t) + 16,20,30*Math.sin(t)+16], [16,16,16], [0, 1, 0])
 
   //Set tile size
   shader.uniforms.tileSize = 1.0/16.0
@@ -89,7 +97,7 @@ shell.on("gl-render", function(t) {
   }
   
   //Draw instanced mesh
-  shader.uniforms.model = A
+  shader.uniforms.model = mat4.identity(A)
   vao.bind()
   gl.drawArrays(gl.TRIANGLES, 0, vertexCount)
   vao.unbind()

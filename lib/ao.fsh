@@ -1,3 +1,5 @@
+precision highp float;
+
 uniform float tileSize;
 uniform sampler2D tileMap;
 
