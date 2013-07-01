@@ -1,13 +1,13 @@
 {
   "name": "ao-shader",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Ambient occlusion capable shader for ao-mesher",
   "main": "aoshader.js",
   "directories": {
     "example": "example"
   },
   "dependencies": {
-    "ao-mesher": "~0.0.0",
+    "ao-mesher": "~0.1.0",
     "gl-shader": "~0.0.5",
     "brfs": "~0.0.5"
   },
