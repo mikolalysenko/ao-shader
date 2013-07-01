@@ -62,7 +62,12 @@ shell.on("gl-init", function() {
   
   //Just create all white texture for now
   var texture_buf = ndarray(new Uint8Array(256*256*4), [256,256,4])
-  ops.assigns(texture_buf, 255)
+  fill(texture_buf, function(i,j,c) {
+    if(c === 3) {
+      return 255
+    }
+    return Math.random() * 255
+  })
   texture = createTexture(gl, texture_buf)
 })
 

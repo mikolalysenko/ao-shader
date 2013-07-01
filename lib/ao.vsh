@@ -13,7 +13,7 @@ varying float ambientOcclusion;
 
 void main() {
   vec3 position = attrib0.xyz;
-  vec3 normal = attrib1.xyz;
+  vec3 normal = attrib1.xyz - 128.0;
   
   ambientOcclusion = attrib0.w / 4.0;
   
@@ -24,7 +24,7 @@ void main() {
   texOffset.y = (tx - ti) * 16.0 * tileSize;
   
   //Compute tile coordinate
-  texCoord = vec2(abs(dot(position, normal.yzx)), abs(dot(position, normal.zxy)));
-
+  texCoord = abs(vec2(dot(position, normal.yzx), dot(position, normal.zxy)));
+  
   gl_Position = projection * view * model * vec4(position, 1.0);
 }

@@ -1,6 +1,6 @@
 {
   "name": "ao-shader",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Ambient occlusion capable shader for ao-mesher",
   "main": "aoshader.js",
   "directories": {
