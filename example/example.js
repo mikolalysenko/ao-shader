@@ -42,7 +42,7 @@ shell.on("gl-init", function() {
   
   //Convert mesh to WebGL buffer
   vertexCount = Math.floor(vert_data.length/8)
-  var vert_buf = createBuffer(gl, vert_data.buffer.subarray(0, vert_data.length))
+  var vert_buf = createBuffer(gl, vert_data)
   vao = createVAO(gl, undefined, [
     { "buffer": vert_buf,
       "type": gl.UNSIGNED_BYTE,
@@ -63,13 +63,10 @@ shell.on("gl-init", function() {
   //Just create all white texture for now
   var texture_buf = ndarray(new Uint8Array(256*256*4), [256,256,4])
   fill(texture_buf, function(i,j,c) {
-    return 255
-    /*
     if(c === 3) {
       return 255
     }
-    return Math.random() * 255
-    */
+    return ((i>>2)+(j>>2))&1 ? 255 : 0
   })
   texture = createTexture(gl, texture_buf)
 })
