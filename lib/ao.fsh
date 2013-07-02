@@ -10,7 +10,7 @@ varying float ambientOcclusion;
 
 void main() {
 
-  vec2 uv      = 2.0 * fract(0.5 * texCoord);
+  vec2 uv      = texCoord;
   vec4 color   = vec4(0,0,0,0);
   float weight = 0.0;
 
