@@ -15,18 +15,15 @@ void main() {
   float weight = 0.0;
 
   vec2 tileOffset = 2.0 * tileSize * tileCoord;
-  float denom = 2.0 * tileSize * 16.0;
+  float denom     = 2.0 * tileSize * 16.0;
 
   for(int dx=0; dx<2; ++dx) {
-    for(int dy=0; dy<2; ++dy) {
+    vec2 offset = 2.0 * fract(0.5 * (uv + 0.5 + vec2(dx, dx)));
+    float w = 1.0 - max(abs(offset.x-1.0), abs(offset.y-1.0));
     
-      vec2 offset = 2.0 * fract(0.5 * (uv + 0.5 + vec2(dx, dy)));
-      float w = 1.0 - max(abs(offset.x-1.0), abs(offset.y-1.0));
-      
-      vec2 tc = (tileOffset + tileSize * offset) / denom;
-      color  += w * texture2D(tileMap, tc);
-      weight += w;
-    }
+    vec2 tc = (tileOffset + tileSize * offset) / denom;
+    color  += w * texture2D(tileMap, tc);
+    weight += w;
   }
 
   color /= weight;
