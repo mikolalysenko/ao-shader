@@ -1,7 +1,7 @@
 "use strict"
 
 var shell = require("gl-now")()
-var createTexture = require("gl-texture2d")
+var createTileMap = require("gl-tile-map")
 var createBuffer = require("gl-buffer")
 var createVAO = require("gl-vao")
 var glm = require("gl-matrix")
@@ -42,7 +42,7 @@ shell.on("gl-init", function() {
   
   //Convert mesh to WebGL buffer
   vertexCount = Math.floor(vert_data.length/8)
-  var vert_buf = createBuffer(gl, vert_data.buffer.subarray(0, vert_data.length))
+  var vert_buf = createBuffer(gl, vert_data)
   vao = createVAO(gl, undefined, [
     { "buffer": vert_buf,
       "type": gl.UNSIGNED_BYTE,
@@ -61,9 +61,14 @@ shell.on("gl-init", function() {
   ])
   
   //Just create all white texture for now
-  var texture_buf = ndarray(new Uint8Array(256*256*4), [256,256,4])
-  ops.assigns(texture_buf, 255)
-  texture = createTexture(gl, texture_buf)
+  var tiles = ndarray(new Uint8Array(256*256*4), [16,16,16,16,4])
+  fill(tiles, function(x,y,i,j,c) {
+    if(c === 3) {
+      return 255
+    }
+    return x*c+y*y*c+((i>>2)+(j>>2))&1 ? 255 : 0
+  })
+  texture = createTileMap(gl, tiles, true)
 })
 
 shell.on("gl-render", function(t) {
@@ -89,7 +94,7 @@ shell.on("gl-render", function(t) {
   shader.uniforms.view = mat4.lookAt(A, [30*Math.cos(t) + 16,20,30*Math.sin(t)+16], [16,16,16], [0, 1, 0])
 
   //Set tile size
-  shader.uniforms.tileSize = 1.0/16.0
+  shader.uniforms.tileSize = 16.0
   
   //Set texture
   if(texture) {

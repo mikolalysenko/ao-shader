@@ -1,17 +1,17 @@
 {
   "name": "ao-shader",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Ambient occlusion capable shader for ao-mesher",
   "main": "aoshader.js",
   "directories": {
     "example": "example"
   },
   "dependencies": {
-    "ao-mesher": "~0.1.0",
     "gl-shader": "~0.0.5",
     "brfs": "~0.0.5"
   },
   "devDependencies": {
+    "ao-mesher": "~0.2.0",
     "ndarray": "~1.0.1",
     "gl-matrix": "~2.0.0",
     "gl-vao": "0.0.2",
@@ -19,7 +19,8 @@
     "gl-now": "0.0.2",
     "ndarray-fill": "~0.1.0",
     "ndarray-ops": "~1.1.0",
-    "gl-texture2d": "~0.1.1"
+    "gl-texture2d": "~0.1.1",
+    "gl-tile-map": "~0.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
