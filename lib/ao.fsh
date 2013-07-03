@@ -28,5 +28,8 @@ void main() {
 
   color /= weight;
   
-  gl_FragColor = vec4(color.xyz * ambientOcclusion, color.w);
+  
+  float light = ambientOcclusion + max(0.15*dot(normal, vec3(1,1,1)), 0.0);
+  
+  gl_FragColor = vec4(color.xyz * light, color.w);
 }

@@ -1,6 +1,6 @@
 {
   "name": "ao-shader",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Ambient occlusion capable shader for ao-mesher",
   "main": "aoshader.js",
   "directories": {
@@ -11,7 +11,7 @@
     "brfs": "~0.0.5"
   },
   "devDependencies": {
-    "ao-mesher": "~0.2.0",
+    "ao-mesher": "~0.2.1",
     "ndarray": "~1.0.1",
     "gl-matrix": "~2.0.0",
     "gl-vao": "0.0.2",

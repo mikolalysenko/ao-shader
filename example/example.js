@@ -29,12 +29,13 @@ shell.on("gl-init", function() {
   
   //Create some voxels
   var voxels = ndarray(new Uint16Array(32*32*32), [32,32,32])
+  voxels.set(16,16,16, 1<<15)
+  
   fill(voxels, function(i,j,k) {
     var x = Math.abs(i - 16)
     var y = Math.abs(j - 16)
     var z = Math.abs(k - 16)
     return (x*x+y*y+z*z) < 30 ? 1<<15 : 0
-    //return Math.max(x,y,z) < 8 ? 1<<15 : 0
   })
   
   //Compute mesh
@@ -89,7 +90,6 @@ shell.on("gl-render", function(t) {
   shader.uniforms.projection = mat4.perspective(A, Math.PI/4.0, shell.width/shell.height, 1.0, 1000.0)
   
   var t = 0.0001*Date.now()
-  
   
   shader.uniforms.view = mat4.lookAt(A, [30*Math.cos(t) + 16,20,30*Math.sin(t)+16], [16,16,16], [0, 1, 0])
 
