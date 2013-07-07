@@ -8,6 +8,7 @@ var glm = require("gl-matrix")
 var ndarray = require("ndarray")
 var fill = require("ndarray-fill")
 var ops = require("ndarray-ops")
+var terrain = require("isabella-texture-pack")
 var createAOMesh = require("ao-mesher")
 var createAOShader = require("../aoshader.js")
 var mat4 = glm.mat4
@@ -35,7 +36,13 @@ shell.on("gl-init", function() {
     var x = Math.abs(i - 16)
     var y = Math.abs(j - 16)
     var z = Math.abs(k - 16)
-    return (x*x+y*y+z*z) < 30 ? 1<<15 : 0
+    if(x*x+y*y+z*z < 30) {
+      if(k < 16) {
+        return 1<<15
+      }
+      return (1<<15)+1
+    }
+    return 0
   })
   
   //Compute mesh
@@ -61,15 +68,11 @@ shell.on("gl-init", function() {
     }
   ])
   
-  //Just create all white texture for now
-  var tiles = ndarray(new Uint8Array(256*256*4), [16,16,16,16,4])
-  fill(tiles, function(x,y,i,j,c) {
-    if(c === 3) {
-      return 255
-    }
-    return x*c+y*y*c+((i>>2)+(j>>2))&1 ? 255 : 0
-  })
+  var tiles = ndarray(terrain.data,
+    [16,16,terrain.shape[0]>>4,terrain.shape[1]>>4,4],
+    [terrain.stride[0]*16, terrain.stride[1]*16, terrain.stride[0], terrain.stride[1], terrain.stride[2]], 0)
   texture = createTileMap(gl, tiles, true)
+  texture.mipSamples = 4
 })
 
 shell.on("gl-render", function(t) {
