@@ -15,26 +15,14 @@ void main() {
   vec3 position = attrib0.xyz;
   
   //Compute ambient occlusion
-  ambientOcclusion = attrib0.w / 4.0;
+  ambientOcclusion = attrib0.w / 255.0;
   
   //Compute normal
-  int side = int(attrib1.x);
-  if(side == 0) {
-    normal = vec3(1, 0, 0);
-  } else if(side == 1) {
-    normal = vec3(0, 1, 0);
-  } else if(side == 2) {
-    normal = vec3(0, 0, 1);
-  } else if(side == 3) {
-    normal = vec3(-1, 0, 0);
-  } else if(side == 4) {
-    normal = vec3(0, -1, 0);
-  } else if(side == 5) {
-    normal = vec3(0, 0, -1);
-  }
+  normal = 128.0 - attrib1.xyz;
   
   //Compute texture coordinate
-  texCoord = attrib1.yz;
+  texCoord = vec2(dot(position, vec3(normal.y-normal.z, 0, normal.x)),
+                  dot(position, vec3(0, -abs(normal.x+normal.z), normal.y)));
   
   //Compute tile coordinate
   float tx    = attrib1.w / 16.0;

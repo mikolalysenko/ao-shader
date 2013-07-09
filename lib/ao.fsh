@@ -20,17 +20,20 @@ void main() {
   for(int dx=0; dx<2; ++dx) {
     for(int dy=0; dy<2; ++dy) {
       vec2 offset = 2.0 * fract(0.5 * (uv + vec2(dx, dy)));
-      float w = 1.0 - max(abs(offset.x-1.0), abs(offset.y-1.0));
+      float w = pow(1.0 - max(abs(offset.x-1.0), abs(offset.y-1.0)), 16.0);
       
       vec2 tc = (tileOffset + tileSize * offset) / denom;
       color  += w * texture2D(tileMap, tc);
       weight += w;
     }
   }
-
   color /= weight;
+  
+  if(color.w < 0.5) {
+    discard;
+  }
   
   float light = ambientOcclusion + max(0.15*dot(normal, vec3(1,1,1)), 0.0);
   
-  gl_FragColor = vec4(color.xyz * light, color.w);
+  gl_FragColor = vec4(color.xyz * light, 1.0);
 }

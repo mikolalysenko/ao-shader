@@ -20,7 +20,7 @@
     "ndarray-fill": "~0.1.0",
     "ndarray-ops": "~1.1.0",
     "gl-texture2d": "~0.1.1",
-    "gl-tile-map": "~0.1.0"
+    "gl-tile-map": "~0.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
