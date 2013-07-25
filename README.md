@@ -10,8 +10,12 @@ Shader for use with ao-mesher.
 
     npm install ao-shader
     
-### `require("ao-shader")(
+### `var shader = require("ao-shader")(gl)`
+Creates a shader in the WebGL context.
 
+* `gl` is the WebGL context to create the shader in
+
+**Returns** A `GLShader` object which wraps a WebGL program
 
 #Credits
 (c) 2013 Mikola Lysenko. MIT License
