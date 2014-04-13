@@ -4,6 +4,7 @@ attribute vec4 attrib1;
 uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
+uniform float tileCount;
 
 varying vec3  normal;
 varying vec2  tileCoord;
@@ -25,9 +26,9 @@ void main() {
                   dot(position, vec3(0, -abs(normal.x+normal.z), normal.y)));
   
   //Compute tile coordinate
-  float tx    = attrib1.w / 16.0;
+  float tx    = attrib1.w / tileCount;
   tileCoord.x = floor(tx);
-  tileCoord.y = fract(tx) * 16.0;
+  tileCoord.y = fract(tx) * tileCount;
   
   gl_Position = projection * view * model * vec4(position, 1.0);
 }
