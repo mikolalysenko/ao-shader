@@ -2,6 +2,7 @@ precision highp float;
 
 uniform float tileSize;
 uniform sampler2D tileMap;
+uniform float tileCount;
 
 varying vec3  normal;
 varying vec2  tileCoord;
@@ -15,7 +16,7 @@ void main() {
   float weight = 0.0;
 
   vec2 tileOffset = 2.0 * tileSize * tileCoord;
-  float denom     = 2.0 * tileSize * 16.0;
+  float denom     = 2.0 * tileSize * tileCount;
 
   for(int dx=0; dx<2; ++dx) {
     for(int dy=0; dy<2; ++dy) {
