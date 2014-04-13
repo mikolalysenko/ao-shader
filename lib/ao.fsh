@@ -21,7 +21,7 @@ void main() {
     for(int dy=0; dy<2; ++dy) {
     
       vec2 offset = 2.0 * fract(0.5 * (uv + 0.5 + vec2(dx, dy)));
-      float w = 1.0 - max(abs(offset.x-1.0), abs(offset.y-1.0));
+      float w = 1.0 - pow(max(abs(offset.x-1.0), abs(offset.y-1.0)), 10.0);
       
       vec2 tc = (tileOffset + tileSize * offset) / denom;
       color  += w * texture2D(tileMap, tc);
