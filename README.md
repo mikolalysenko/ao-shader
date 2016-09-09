@@ -6,6 +6,10 @@ Shader for use with ao-mesher.
 
 [Check it out in your browser.](http://mikolalysenko.github.io/ao-shader/index.html)
 
+To run the example locally
+
+    npm install && npm start
+
 ## Install
 
     npm install ao-shader
