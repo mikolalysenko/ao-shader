@@ -102,7 +102,8 @@ shell.on("gl-render", function(t) {
 	shader.uniforms.model = mat4.identity(A)
   shader.uniforms.tileMap = texture.bind()
   shader.uniforms.tileSize = 16.0
-  
+  shader.uniforms.tileCount = 16.0
+
   //Draw object
   vao.bind()
   gl.drawArrays(gl.TRIANGLES, 0, vertexCount)
