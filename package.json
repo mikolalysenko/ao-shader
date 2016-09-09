@@ -15,6 +15,7 @@
     "ndarray": "~1.0.1",
     "gl-matrix": "~2.0.0",
     "gl-vao": "0.0.2",
+    "budo": "^9.0.0",
     "gl-buffer": "~0.1.0",
     "gl-now": "~0.0.4",
     "ndarray-fill": "~0.1.0",
@@ -25,6 +26,7 @@
     "isabella-texture-pack": "~0.0.1"
   },
   "scripts": {
+    "start": "budo example/example.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
